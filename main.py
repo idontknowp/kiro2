@@ -16,7 +16,12 @@ for i in range(n):
         if i != j:
             g.addEdge(i, j, distances_matrix[i][j])
 
-kruk_tree = g.KruskalMST()
+krusk_tree = g.KruskalMST()
 
 #Euler
+g2 = Graph2(n)
+for e in krusk_tree:
+    g2.addEdge(e[0], e[1])
+    g2.addEdge(e[1], e[0])
 
+g2.printEulerTour()

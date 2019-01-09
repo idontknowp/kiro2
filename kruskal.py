@@ -97,7 +97,6 @@ class Graph:
 
 
 class Graph2:
-
     def __init__(self, vertices):
         self.V = vertices  # No. of vertices
         self.graph = defaultdict(list)  # default dictionary to store graph
@@ -110,7 +109,6 @@ class Graph2:
         self.graph[v].append(u)
 
         # This function removes edge u-v from graph
-
     def rmvEdge(self, u, v):
         for index, key in enumerate(self.graph[u]):
             if key == v:
@@ -167,8 +165,9 @@ class Graph2:
             if self.isValidNextEdge(u, v):
                 print("%d-%d " % (u, v)),
                 self.rmvEdge(u, v)
+                self.tour.append([u, v])
                 self.printEulerUtil(v)
-                self.tour.append(v)
+
 
     '''The main function that print Eulerian Trail. It first finds an odd 
    degree vertex (if there is any) and then calls printEulerUtil() 
