@@ -80,6 +80,7 @@ def read_nodes_csv2(nodes_file):
             for i in e[:2]:
                 l.append(float(i))
             l.append(0)
+            l.append(nodes_tab.index(e))
             full_tab.append(l)
             n_distr += 1
         if e[2] == 'terminal':
@@ -87,6 +88,7 @@ def read_nodes_csv2(nodes_file):
             for i in e[:2]:
                 l.append(float(i))
             l.append(1)
+            l.append(nodes_tab.index(e))
             full_tab.append(l)
             n_term += 1
 
@@ -95,3 +97,6 @@ def read_nodes_csv2(nodes_file):
 
 def judgeSolution(solution):
     return 0
+
+
+def separate(term_full_tab):

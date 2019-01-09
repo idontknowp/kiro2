@@ -9,6 +9,12 @@ distances_file = 'instances/' + city_name + '/distances.csv'
 full_tab, n, n_distr, n_term = read_nodes_csv2(nodes_file)
 distances_matrix = read_distances_csv(distances_file, n)
 
+#On sépare le graphe en n_distr parties
+term_full_tab = full_tab[n_distr+1:]
+distr_full_tab = full_tab[0:n_distr]
+term_tab_sep = separate()
+
+
 # Kruskal
 g = Graph(n)
 for i in range(n):
@@ -25,3 +31,7 @@ for e in krusk_tree:
     g2.addEdge(e[1], e[0])
 
 g2.printEulerTour()
+euler_tour = g2.tour
+
+#Hamiltonien
+
