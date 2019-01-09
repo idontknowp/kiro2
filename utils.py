@@ -95,32 +95,27 @@ def read_nodes_csv2(nodes_file):
     n = len(full_tab)
     return full_tab, n, n_distr, n_term
 
-def readSolution(filename):
-    try:
-        with open(filename, 'r') as solu:
-            return solu
-    except:
-        print("Erreur d'ouverture de solution !")
+# def readSolution(filename): # UNUSED
+#     try:
+#         with open(filename, 'r') as solu:
+#             return solu
+#     except:
+#         print("Erreur d'ouverture de solution !")
 
 def judgeSolution(solution):
     return 0
 
-<<<<<<< HEAD
 def costSolution(solution):
+    cost = 0
+    line =
     return 800000
 
 readSolution("mai")
-=======
 
 def separate(distr_full_tab, term_full_tab, distances_matrix):
     term_tab_sep = [[]*len(distr_full_tab)]
     for e in distr_full_tab:
         min = 100000
-        for i in range(len(distr_full_tab)):
+        for i in range(len(distr_full_tab))
             if distances_matrix[e[3]][term_full_tab[i]] < min:
                 min = distances_matrix[e[3]][term_full_tab[i]]
-                e_min = e
-                i_min = i
-        term_tab_sep[i_min].append(e)
-
->>>>>>> 804a6b0fc28c77fc8c0a36de47772a0d3b33db93
