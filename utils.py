@@ -80,6 +80,7 @@ def read_nodes_csv2(nodes_file):
             for i in e[:2]:
                 l.append(float(i))
             l.append(0)
+            l.append(nodes_tab.index(e))
             full_tab.append(l)
             n_distr += 1
         if e[2] == 'terminal':
@@ -87,6 +88,7 @@ def read_nodes_csv2(nodes_file):
             for i in e[:2]:
                 l.append(float(i))
             l.append(1)
+            l.append(nodes_tab.index(e))
             full_tab.append(l)
             n_term += 1
 
@@ -103,7 +105,19 @@ def readSolution(filename):
 def judgeSolution(solution):
     return 0
 
+<<<<<<< HEAD
 def costSolution(solution):
     return 800000
 
 readSolution("mai")
+=======
+
+def separate(distr_full_tab, term_full_tab, distances_matrix):
+    term_tab_sep = [[]*len(distr_full_tab)]
+    for e in distr_full_tab:
+        min = 100000
+        for i in range(len(distr_full_tab))
+            if distances_matrix[e[3]][term_full_tab[i]] < min:
+                min = distances_matrix[e[3]][term_full_tab[i]]
+
+>>>>>>> 804a6b0fc28c77fc8c0a36de47772a0d3b33db93
