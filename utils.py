@@ -1,4 +1,6 @@
 import csv
+from kruskal import *
+import matplotlib.pyplot as plt
 
 
 def read_nodes_csv(nodes_file):
@@ -80,7 +82,7 @@ def read_nodes_csv2(nodes_file):
             for i in e[:2]:
                 l.append(float(i))
             l.append(0)
-            l.append(nodes_tab.index(e))
+            l.append(nodes_tab.index(e)-1)
             full_tab.append(l)
             n_distr += 1
         if e[2] == 'terminal':
@@ -88,39 +90,83 @@ def read_nodes_csv2(nodes_file):
             for i in e[:2]:
                 l.append(float(i))
             l.append(1)
-            l.append(nodes_tab.index(e))
+            l.append(nodes_tab.index(e)-1)
             full_tab.append(l)
             n_term += 1
 
     n = len(full_tab)
     return full_tab, n, n_distr, n_term
 
-def readSolution(filename):
-    try:
-        with open(filename, 'r') as solu:
-            return solu
-    except:
-        print("Erreur d'ouverture de solution !")
+# def readSolution(filename):
+#     try:
+#         with open(filename, 'r') as solu:
+#             return solu
+#     except:
+#         print("Erreur d'ouverture de solution !")
+#
+# def judgeSolution(solution):
+#     return 0
+#
+# <<<<<<< HEAD
+# def costSolution(solution):
+#     return 800000
 
-def judgeSolution(solution):
-    return 0
-
-<<<<<<< HEAD
-def costSolution(solution):
-    return 800000
-
-readSolution("mai")
-=======
 
 def separate(distr_full_tab, term_full_tab, distances_matrix):
-    term_tab_sep = [[]*len(distr_full_tab)]
-    for e in distr_full_tab:
+    term_tab_sep = [[] for i in range(len(distr_full_tab))]
+    for t in term_full_tab:
         min = 100000
-        for i in range(len(distr_full_tab)):
-            if distances_matrix[e[3]][term_full_tab[i]] < min:
-                min = distances_matrix[e[3]][term_full_tab[i]]
-                e_min = e
-                i_min = i
-        term_tab_sep[i_min].append(e)
+        for d in distr_full_tab:
+            if distances_matrix[t[3]][d[3]] < min:
+                min = distances_matrix[t[3]][d[3]]
+                min_d = d
+        term_tab_sep[min_d[3]].append(t)
+    for t in distr_full_tab:
+        term_tab_sep[t[3]].append(t)
 
->>>>>>> 804a6b0fc28c77fc8c0a36de47772a0d3b33db93
+    return term_tab_sep
+
+
+def kruskal_tree(n, distances_matrix):
+    g = Graph(n)
+    for i in range(n):
+        for j in range(n):
+            if i != j:
+                g.addEdge(i, j, distances_matrix[i][j])
+
+    return g.KruskalMST()
+
+
+def eulerian_path(krusk_tree, n):
+    g2 = Graph2(n)
+    for e in krusk_tree:
+        g2.addEdge(e[0], e[1])
+        g2.addEdge(e[1], e[0])
+
+    g2.printEulerTour()
+    return g2.tour
+
+
+def hamiltonien(eul_path)
+
+def plot_separate_network(data, links=0):
+
+    for i in range(len(data)):
+        l_x, l_y = [], []
+        for e in data[i]:
+            if e[2] == 1:
+                l_x.append(e[0])
+                l_y.append(e[1])
+        plt.scatter(l_x, l_y, marker='o')
+        l_x, l_y = [], []
+        for e in data[i]:
+            if e[2] == 0:
+                l_x.append(e[0])
+                l_y.append(e[1])
+        plt.scatter(l_x, l_y, marker='^')
+
+        # l_x, l_y = [], []
+
+
+    plt.show()
+

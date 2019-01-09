@@ -87,11 +87,11 @@ class Graph:
                 self.union(parent, rank, x, y)
                 # Else discard the edge
 
-        # print the contents of result[] to display the built MST
-        print("Following are the edges in the constructed MST")
-        for u, v, weight in result:
-            # print str(u) + " -- " + str(v) + " == " + str(weight)
-            print("%d -- %d == %d" % (u, v, weight))
+        # # print the contents of result[] to display the built MST
+        # print("Following are the edges in the constructed MST")
+        # for u, v, weight in result:
+        #     # print str(u) + " -- " + str(v) + " == " + str(weight)
+        #     print("%d -- %d == %d" % (u, v, weight))
 
         return result
 
@@ -163,7 +163,6 @@ class Graph2:
         for v in self.graph[u]:
             # If edge u-v is not removed and it's a a valid next edge
             if self.isValidNextEdge(u, v):
-                print("%d-%d " % (u, v)),
                 self.rmvEdge(u, v)
                 self.tour.append([u, v])
                 self.printEulerUtil(v)
@@ -181,6 +180,5 @@ class Graph2:
                 u = i
                 break
         # Print tour starting from odd vertex
-        print("\n")
         self.printEulerUtil(u)
 
