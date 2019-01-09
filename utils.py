@@ -72,16 +72,23 @@ def read_nodes_csv2(nodes_file):
             i += 1
             nodes_tab.append(row)
     full_tab = []
+    n_distr = 0
+    n_term = 0
     for e in nodes_tab:
         if e[2] == 'distribution':
             l = []
             for i in e[:2]:
                 l.append(float(i))
+            l.append(0)
             full_tab.append(l)
+            n_distr += 1
         if e[2] == 'terminal':
             l = []
             for i in e[:2]:
                 l.append(float(i))
+            l.append(1)
+            full_tab.append(l)
+            n_term += 1
 
     n = len(full_tab)
-    return full_tab, n
+    return full_tab, n, n_distr, n_term
