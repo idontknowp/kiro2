@@ -92,3 +92,6 @@ def read_nodes_csv2(nodes_file):
 
     n = len(full_tab)
     return full_tab, n, n_distr, n_term
+
+def judgeSolution(solution):
+    return 0
