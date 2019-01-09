@@ -93,5 +93,17 @@ def read_nodes_csv2(nodes_file):
     n = len(full_tab)
     return full_tab, n, n_distr, n_term
 
+def readSolution(filename):
+    try:
+        with open(filename, 'r') as solu:
+            return solu
+    except:
+        print("Erreur d'ouverture de solution !")
+
 def judgeSolution(solution):
     return 0
+
+def costSolution(solution):
+    return 800000
+
+readSolution("mai")
