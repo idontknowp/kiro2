@@ -12,7 +12,7 @@ distances_matrix = read_distances_csv(distances_file, n)
 #On sépare le graphe en n_distr parties
 term_full_tab = full_tab[n_distr+1:]
 distr_full_tab = full_tab[0:n_distr]
-term_tab_sep = separate()
+term_tab_sep = separate(distr_full_tab, term_full_tab)
 
 
 # Kruskal

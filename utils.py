@@ -99,4 +99,11 @@ def judgeSolution(solution):
     return 0
 
 
-def separate(term_full_tab):
+def separate(distr_full_tab, term_full_tab, distances_matrix):
+    term_tab_sep = [[]*len(distr_full_tab)]
+    for e in distr_full_tab:
+        min = 100000
+        for i in range(len(distr_full_tab))
+            if distances_matrix[e[3]][term_full_tab[i]] < min:
+                min = distances_matrix[e[3]][term_full_tab[i]]
+
