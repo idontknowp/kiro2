@@ -102,8 +102,6 @@ def read_nodes_csv2(nodes_file):
 #     except:
 #         print("Erreur d'ouverture de solution !")
 
-readSolution("mai")
-
 def separate(distr_full_tab, term_full_tab, distances_matrix):
     term_tab_sep = [[] for i in range(len(distr_full_tab))]
 
