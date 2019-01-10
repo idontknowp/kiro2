@@ -1,4 +1,5 @@
 import csv
+from kruskal import *
 
 
 def read_nodes_csv(nodes_file):
@@ -102,27 +103,29 @@ def read_nodes_csv2(nodes_file):
 #     except:
 #         print("Erreur d'ouverture de solution !")
 
+
 def separate(distr_full_tab, term_full_tab, distances_matrix):
     term_tab_sep = [[] for i in range(len(distr_full_tab))]
 
     for d in distr_full_tab:
-        term_tab_sep[d[3]].append(d)
+        term_tab_sep[d[3]-1].append(d)
 
     for t in term_full_tab:
         min = 100000
         for d in distr_full_tab:
-            if distances_matrix[t[3]][d[3]] < min:
-                min = distances_matrix[t[3]][d[3]]
+            if distances_matrix[t[3]-1][d[3]-1] < min:
+                min = distances_matrix[t[3]-1][d[3]-1]
                 min_d = d
-        term_full_tab[min_d[3]].append(d)
+        term_tab_sep[min_d[3]-1].append(t)
     return term_tab_sep
 
-def kruskal_tree(n, partition, distances_matrix):
-    g = Graph(n+1)
-    for i in partition:
-        for j in partition:
-            if i != j:
-                g.addEdge(i, j, distances_matrix[i][j])
+
+def kruskal_tree(n, partition, distances_matrix, corresp):
+    g = Graph(n)
+    for i in range(len(partition)):
+        for j in range(len(partition)):
+            if partition[i] != partition[j]:
+                g.addEdge(partition[i], partition[j], distances_matrix[corresp[i]-1][corresp[j]-1])
 
     return g.KruskalMST()
 
@@ -181,3 +184,19 @@ def regularize(ham_path_separate):
 #             min = 50000
 #             for k in range(5):
 #                 if distances_matrix[element[node_i]][]:
+
+
+def mapping(tab_sep):
+    mapped_tab_sep = [[] for i in range(len(tab_sep))]
+    corresp = [[] for i in range(len(tab_sep))]
+
+    for group_i in range(len(tab_sep)):
+        for i in tab_sep[group_i]:
+            corresp[group_i].append(i[3])
+
+    for group_i in range(len(tab_sep)):
+        for i in range(len(tab_sep[group_i])):
+            mapped_tab_sep[group_i].append(i)
+
+    return mapped_tab_sep, corresp
+

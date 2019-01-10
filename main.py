@@ -1,5 +1,5 @@
 from utils import *
-from kruskal import *
+
 
 city_name = 'nice'
 
@@ -10,9 +10,9 @@ full_tab, n, n_distr, n_term = read_nodes_csv2(nodes_file)
 distances_matrix = read_distances_csv(distances_file, n)
 
 #On sépare le graphe en n_distr parties
-term_full_tab = full_tab[n_distr+1:]
-distr_full_tab = full_tab[0:n_distr]
-term_tab_sep = separate(distr_full_tab, term_full_tab, distances_matrix)
+term_full_tab = full_tab[n_distr:]
+distr_full_tab = full_tab[:n_distr]
+tab_sep = separate(distr_full_tab, term_full_tab, distances_matrix)
 
 
 # # Kruskal
@@ -39,10 +39,13 @@ krusk_tree_separate = []
 eul_path_separate = []
 ham_path_separate = []
 
-for partition in term_tab_sep:
+mapped_tab_sep, corresp = mapping(tab_sep)
+
+for partition_i in range(len(mapped_tab_sep)):
+    partition = mapped_tab_sep[partition_i]
     n_partition = len(partition)
     # Kruskal
-    krusk_tree = kruskal_tree(n, partition, distances_matrix)
+    krusk_tree = kruskal_tree(n_partition, partition, distances_matrix, corresp[partition_i])
     krusk_tree_separate.append(krusk_tree)
 
     # Euler
@@ -52,4 +55,5 @@ for partition in term_tab_sep:
     # Hamiltonien
     ham_path = hamiltonian_path(eul_path)
     ham_path_separate.append(ham_path)
-    ham_path_separate_reg = regularize(ham_path_separate)
+     = regularize(ham_path_separate)
+
