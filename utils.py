@@ -1,6 +1,6 @@
 import csv
 from kruskal import *
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 
 def read_nodes_csv(nodes_file):
@@ -97,40 +97,28 @@ def read_nodes_csv2(nodes_file):
     n = len(full_tab)
     return full_tab, n, n_distr, n_term
 
-# def readSolution(filename):
-#     try:
-#         with open(filename, 'r') as solu:
-#             return solu
-#     except:
-#         print("Erreur d'ouverture de solution !")
-#
-# def judgeSolution(solution):
-#     return 0
-#
-# <<<<<<< HEAD
-# def costSolution(solution):
-#     return 800000
 
-
-def separate(distr_full_tab, term_full_tab, distances_matrix):
+def separate(n, distr_full_tab, term_full_tab, distances_matrix):
     term_tab_sep = [[] for i in range(len(distr_full_tab))]
+
+    for d in distr_full_tab:
+        term_tab_sep[d[3]].append(d[3])
+
     for t in term_full_tab:
         min = 100000
         for d in distr_full_tab:
             if distances_matrix[t[3]][d[3]] < min:
                 min = distances_matrix[t[3]][d[3]]
                 min_d = d
-        term_tab_sep[min_d[3]].append(t)
-    for t in distr_full_tab:
-        term_tab_sep[t[3]].append(t)
-
+        term_full_tab[min_d[3]].append()
+    term_full_tab[0][0] = n #on met la premiere node a la valeur n pour pas commencer de 0
     return term_tab_sep
 
 
-def kruskal_tree(n, distances_matrix):
-    g = Graph(n)
-    for i in range(n):
-        for j in range(n):
+def kruskal_tree(n, partition, distances_matrix):
+    g = Graph(n+1)
+    for i in partition:
+        for j in partition:
             if i != j:
                 g.addEdge(i, j, distances_matrix[i][j])
 
@@ -147,10 +135,16 @@ def eulerian_path(krusk_tree, n):
     return g2.tour
 
 
-def hamiltonien(eul_path)
+def hamiltonian_path(eul_path):
+    H = []
+
+    for e in eul_path:
+        if e[0] not in H:
+            H.append(e[0])
+    return H
+
 
 def plot_separate_network(data, links=0):
-
     for i in range(len(data)):
         l_x, l_y = [], []
         for e in data[i]:
@@ -167,6 +161,24 @@ def plot_separate_network(data, links=0):
 
         # l_x, l_y = [], []
 
-
     plt.show()
+
+
+def regularize(ham_path_separate):
+    for i in range(1, len(ham_path_separate)):
+        for j in range(len(ham_path_separate[i])):
+            ham_path_separate[i][j] += len(ham_path_separate[i-1])
+    return ham_path_separate
+
+
+# def rearrange(ham_path_separate_reg, distances_matrix):
+#     list_appendices = []
+#     for element in ham_path_separate_reg:
+#         node_i = 0
+#         while node_i < len(element):
+#             min = 50000
+#             for k in range(5):
+#                 if distances_matrix[element[node_i]][]:
+
+
 

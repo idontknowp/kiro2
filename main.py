@@ -1,7 +1,7 @@
 from utils import *
 
 
-city_name = 'paris'
+city_name = 'nice'
 
 nodes_file = 'instances/' + city_name + '/nodes.csv'
 distances_file = 'instances/' + city_name + '/distances.csv'
@@ -13,9 +13,9 @@ distances_matrix = read_distances_csv(distances_file, n)
 #On sépare le graphe en n_distr parties
 term_full_tab = full_tab[n_distr+1:]
 distr_full_tab = full_tab[0:n_distr]
-term_tab_sep = separate(distr_full_tab, term_full_tab, distances_matrix)
+term_tab_sep = separate(n, distr_full_tab, term_full_tab, distances_matrix)
 
-plot_separate_network(term_tab_sep)
+# plot_separate_network(term_tab_sep)
 
 
 krusk_tree_separate = []
@@ -25,7 +25,7 @@ ham_path_separate = []
 for partition in term_tab_sep:
     n_partition = len(partition)
     # Kruskal
-    krusk_tree = kruskal_tree(n_partition, distances_matrix)
+    krusk_tree = kruskal_tree(n, partition, distances_matrix)
     krusk_tree_separate.append(krusk_tree)
 
     # Euler
@@ -34,6 +34,9 @@ for partition in term_tab_sep:
 
     # Hamiltonien
     ham_path = hamiltonian_path(eul_path)
+    ham_path_separate.append(ham_path)
+    ham_path_separate_reg = regularize(ham_path_separate)
+
 
 
 
