@@ -102,14 +102,6 @@ def read_nodes_csv2(nodes_file):
 #     except:
 #         print("Erreur d'ouverture de solution !")
 
-def judgeSolution(solution):
-    return 0
-
-def costSolution(solution):
-    cost = 0
-    line =
-    return 800000
-
 readSolution("mai")
 
 def separate(distr_full_tab, term_full_tab, distances_matrix):
