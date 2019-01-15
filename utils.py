@@ -130,6 +130,25 @@ def kruskal_tree(n, partition, distances_matrix, corresp):
     return g.KruskalMST()
 
 
+def demapping(appendices_separate, corresp):
+    for i in range(len(appendices_separate)):
+        for j in range(len(appendices_separate[i])):
+            for k in range(len(appendices_separate[i][j])):
+                appendices_separate[i][j][k] = corresp[i][k]
+
+
+def demapping2(appendices_separate, corresp):
+    for i in range(len(appendices_separate)):
+        for j in range(len(appendices_separate[i])):
+            appendices_separate[i][j] = corresp[i][j]
+
+
+def get_missing(ham_path, appendices, corresp, distances_matrix):
+    for i in range(max(ham_path)):
+        if i not in ham_path:
+            appendices.append([i, nearest_vertice(i, corresp, distances_matrix, ham_path)])
+
+
 def eulerian_path(krusk_tree, n):
     g2 = Graph2(n)
     for e in krusk_tree:
@@ -148,34 +167,6 @@ def hamiltonian_path(eul_path):
             H.append(e[0])
     return H
 
-
-def plot_separate_network(data, links=0):
-    for i in range(len(data)):
-        l_x, l_y = [], []
-        for e in data[i]:
-            if e[2] == 1:
-                l_x.append(e[0])
-                l_y.append(e[1])
-        plt.scatter(l_x, l_y, marker='o')
-        l_x, l_y = [], []
-        for e in data[i]:
-            if e[2] == 0:
-                l_x.append(e[0])
-                l_y.append(e[1])
-        plt.scatter(l_x, l_y, marker='^')
-
-        # l_x, l_y = [], []
-
-    plt.show()
-
-
-def regularize(ham_path_separate):
-    for i in range(1, len(ham_path_separate)):
-        for j in range(len(ham_path_separate[i])):
-            ham_path_separate[i][j] += len(ham_path_separate[i-1])
-    return ham_path_separate
-
-
 # def rearrange(ham_path_separate_reg, distances_matrix):
 #     list_appendices = []
 #     for element in ham_path_separate_reg:
@@ -184,6 +175,36 @@ def regularize(ham_path_separate):
 #             min = 50000
 #             for k in range(5):
 #                 if distances_matrix[element[node_i]][]:
+
+
+def regularize(ham_path, corresp, distances_matrix):
+    i = 0
+    appendices = []
+
+    while i < len(ham_path):
+        k_min = 1
+        d_min = 100000
+        k = 1
+        while k + i < len(ham_path) and k < 5:
+            if distances_matrix[corresp[ham_path[i]]-1][corresp[ham_path[i+k]]-1] < d_min:
+                k_min = k
+                d_min = distances_matrix[corresp[ham_path[i]]-1][corresp[ham_path[i+k]]-1]
+            k += 1
+
+        if k_min != 1:
+            appendices.append(ham_path[i:i+k_min])
+
+        i += k_min
+    print(appendices)
+
+    for e in appendices:
+        print(e)
+        for m in e[1:]:
+            print(m)
+            print(ham_path)
+            ham_path.remove(m)
+
+    return appendices
 
 
 def mapping(tab_sep):
@@ -200,3 +221,20 @@ def mapping(tab_sep):
 
     return mapped_tab_sep, corresp
 
+
+def nearest_vertice(i, corresp, distances_matrix, ham_path):
+    min = distances_matrix[corresp[ham_path[0]]-1][corresp[i]-1]
+    result = 0
+    for j in ham_path:
+        if distances_matrix[corresp[j]-1][corresp[i]-1] <= min:
+            result = j
+            min = distances_matrix[corresp[j]-1][corresp[i]-1]
+    return result
+
+
+def destruct(appendices_separate):
+    sol = []
+    for i in appendices_separate:
+        for j in i:
+            sol.append(j)
+    return sol

@@ -38,6 +38,7 @@ tab_sep = separate(distr_full_tab, term_full_tab, distances_matrix)
 krusk_tree_separate = []
 eul_path_separate = []
 ham_path_separate = []
+appendices_separate = []
 
 mapped_tab_sep, corresp = mapping(tab_sep)
 
@@ -54,6 +55,14 @@ for partition_i in range(len(mapped_tab_sep)):
 
     # Hamiltonien
     ham_path = hamiltonian_path(eul_path)
+    appendices = regularize(ham_path, corresp[partition_i], distances_matrix)
+    get_missing(ham_path, appendices, corresp[partition_i], distances_matrix)
     ham_path_separate.append(ham_path)
-     = regularize(ham_path_separate)
+    appendices_separate.append(appendices)
 
+print(appendices_separate)
+
+demapping(appendices_separate, corresp)
+demapping2(ham_path_separate, corresp)
+
+appendices_sep = destruct(appendices_separate)
